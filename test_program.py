@@ -21,12 +21,17 @@ def test_check_no_colon_syntax_error():
 
 def test_get_functions():
     path='calculator.py'
-    assert get_functions(path)== ['add', 'multiply']
-
+    assert get_functions(path)== [{'name': 'add', 'start_row': 1, 'end_row': 7}, {'name': 'multiply', 'start_row': 9, 'end_row': 18}, {'name': 'themba', 'start_row': 20, 'end_row': 23}, {'name': 'another_one', 'start_row': 25, 'end_row': 27}]
+'''
 def test_wrong_file_get_functions():
     with pytest.raises(FileNotFoundError) as fnf:
         get_functions('haha')
     assert 'No such file' in (str(fnf.value))
+'''
+def test_not_python_file():
+    with pytest.raises(TypeError) as TE:
+        get_functions('haha.spy')
+    assert 'Not' in (str(TE.value))
 
 
 
