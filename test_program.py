@@ -1,27 +1,23 @@
-from program import check_function, get_functions
+from program import check_function, list_all_js_function_names
 
 import pytest
 
 def test_check_function():
-    line="def get_money():"
-    assert check_function(line)=='get_money'
+    line=" function foo():"
+    assert check_function(line)=='foo'
 
 def test_check_no_fucntion():
     line= 'haha'
     assert check_function(line)==None
 
 def test_check_funcion_call():
-    line= 'add(5,2)'
-    assert check_function(line)== None
-
-def test_check_no_colon_syntax_error():
-    line= 'def my_function(argument)'
+    line= 'foo(5,2)'
     assert check_function(line)== None
 
 
 def test_get_functions():
-    path='calculator.py'
-    assert get_functions(path)== [{'name': 'add', 'start_row': 1, 'end_row': 7}, {'name': 'multiply', 'start_row': 9, 'end_row': 18}, {'name': 'themba', 'start_row': 20, 'end_row': 23}, {'name': 'another_one', 'start_row': 25, 'end_row': 27}]
+    path='cards.js'
+    assert list_all_js_function_names(path)== [{'name': 'promptUser', 'start_row': 7, 'end_row': 13}, {'name': 'Array.prototype.memory_card_shuffle', 'start_row': 15, 'end_row': 23}, {'name': 'newBoard', 'start_row': 25, 'end_row': 35}, {'name': 'flip2Back', 'start_row': 64, 'end_row': 80}]
 '''
 def test_wrong_file_get_functions():
     with pytest.raises(FileNotFoundError) as fnf:
@@ -30,7 +26,7 @@ def test_wrong_file_get_functions():
 '''
 def test_not_python_file():
     with pytest.raises(TypeError) as TE:
-        get_functions('haha.spy')
+        list_all_js_function_names('haha.spy')
     assert 'Not' in (str(TE.value))
 
 
